@@ -2,19 +2,34 @@
 
 import { useState, FormEvent } from "react";
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Hook up to your transport of choice (API route, server action, mailto, etc.)
-    console.log("Transmitting:", form);
+    setStatus("sending");
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } else {
+      setStatus("error");
+    }
   };
 
   return (
     <section id="contact" className="bg-surface-container-lowest border-t-2 border-primary/20">
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 lg:p-margin-desktop py-24 lg:py-0 bg-black flex flex-col justify-between border-r-2 border-primary/10 px-margin-mobile">
+        <div className="lg:w-1/3 lg:p-margin-desktop py-24 py-0 bg-black flex flex-col justify-between border-r-2 border-primary/10 px-margin-mobile">
           <div>
             <h2 className="font-headline-lg text-headline-lg uppercase mb-8">
               Initialize <br /> Contact
@@ -30,22 +45,22 @@ export default function Contact() {
                 </span>
                 <a
                   className="font-code-sm hover:text-primary transition-colors"
-                  href="mailto:ed@paulopedro.dev"
+                  href="mailto:ed.paulo.pedro04@gmail.com"
                 >
-                  ed@paulopedro.dev
+                  ed.paulo.pedro04@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-4">
                 <span className="material-symbols-outlined text-primary">
                   call
                 </span>
-                <span className="font-code-sm">+1 234 567 8900</span>
+                <span className="font-code-sm">+63 995 711 8740</span>
               </div>
               <div className="flex items-center gap-4">
                 <span className="material-symbols-outlined text-primary">
                   location_on
                 </span>
-                <span className="font-code-sm">REMOTE_UNIT // NYC</span>
+                <span className="font-code-sm">PAMPANGA</span>
               </div>
             </div>
           </div>
@@ -53,7 +68,7 @@ export default function Contact() {
             SECURE_CHANNEL: 256-BIT_ENCRYPTED
           </div>
         </div>
-        <div className="lg:w-2/3 lg:p-margin-desktop px-margin-mobile py-24 lg:py-0">
+        <div className="lg:w-2/3 lg:p-margin-desktop px-margin-mobile py-0">
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 md:grid-cols-2 gap-gutter"
@@ -100,12 +115,24 @@ export default function Contact() {
                 }
               />
             </div>
-            <div className="col-span-full flex justify-end">
+            <div className="col-span-full flex items-center justify-between gap-4 flex-wrap">
+              {status === "success" && (
+                <span className="font-code-sm text-primary">
+                  TRANSMISSION_SENT // MESSAGE RECEIVED
+                </span>
+              )}
+              {status === "error" && (
+                <span className="font-code-sm text-error">
+                  ERROR // FAILED TO TRANSMIT. RETRY.
+                </span>
+              )}
+              {status !== "success" && status !== "error" && <span />}
               <button
-                className="bg-primary text-on-primary font-label-caps px-12 py-4 font-black uppercase text-[14px] hover:brightness-110 active:scale-95 transition-all"
+                className="bg-primary text-on-primary font-label-caps px-12 py-4 font-black uppercase text-[14px] hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
+                disabled={status === "sending"}
               >
-                Transmit Data
+                {status === "sending" ? "TRANSMITTING..." : "Transmit Data"}
               </button>
             </div>
           </form>

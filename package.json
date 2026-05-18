@@ -11,7 +11,8 @@
   "dependencies": {
     "next": "^15.5.16",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "resend": "^6.12.3"
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
