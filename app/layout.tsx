@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "XZVL - Web Development Portfolio",
   description:
     "Engineering High-Performance Interfaces. A cyber-industrial portfolio by Ed Paulo Pedro.",
+  icons: {
+    icon: '/assets/favicon.png',
+  },
 };
 
 export default function RootLayout({
