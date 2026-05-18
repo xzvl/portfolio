@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EPP // 2026 — Ed Paulo Pedro",
+  title: "XZVL - Web Development Portfolio",
   description:
     "Engineering High-Performance Interfaces. A cyber-industrial portfolio by Ed Paulo Pedro.",
 };
