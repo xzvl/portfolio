@@ -2,10 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 const socials = [
-  { href: "https://github.com/xzvl/", label: "GITHUB" },
   { href: "https://www.facebook.com/profile.php?id=61589843499098", label: "FACEBOOK" },
-  { href: "#portfolio", label: "INSTAGRAM" },
-  { href: "#services", label: "TWITTER" }
+  { href: "https://www.linkedin.com/in/ed-paulo-pedro/", label: "LINKEDIN" },
 ];
 
 
