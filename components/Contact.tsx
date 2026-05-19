@@ -54,13 +54,16 @@ export default function Contact() {
                 <span className="material-symbols-outlined text-primary">
                   call
                 </span>
-                <span className="font-code-sm">+63 995 711 8740</span>
+                <a
+                  className="font-code-sm hover:text-primary transition-colors"
+                  href="tel:+639957118740"
+                >+63 995 711 8740</a>
               </div>
               <div className="flex items-center gap-4">
                 <span className="material-symbols-outlined text-primary">
                   location_on
                 </span>
-                <span className="font-code-sm">PAMPANGA</span>
+                <span className="font-code-sm">PAMPANGA, PHILIPPINES</span>
               </div>
             </div>
           </div>
@@ -68,7 +71,7 @@ export default function Contact() {
             SECURE_CHANNEL: 256-BIT_ENCRYPTED
           </div>
         </div>
-        <div className="lg:w-2/3 lg:p-margin-desktop px-margin-mobile py-0">
+        <div className="lg:w-2/3 lg:p-margin-desktop px-margin-mobile py-24">
           <form
             onSubmit={handleSubmit}
             className="grid grid-cols-1 md:grid-cols-2 gap-gutter"

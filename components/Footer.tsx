@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const socials = ["GITHUB", "LINKEDIN", "INSTAGRAM", "TWITTER"];
+const socials = [
+  { href: "https://github.com/xzvl/", label: "GITHUB" },
+  { href: "https://www.facebook.com/profile.php?id=61589843499098", label: "FACEBOOK" },
+  { href: "#portfolio", label: "INSTAGRAM" },
+  { href: "#services", label: "TWITTER" }
+];
+
 
 export default function Footer() {
   return (
@@ -19,11 +25,11 @@ export default function Footer() {
       <div className="flex gap-gutter font-code-sm text-code-sm">
         {socials.map((social) => (
           <Link
-            key={social}
+            key={social.label}
             className="text-on-secondary-container hover:text-primary transition-colors"
-            href="#"
+            href={social.href}
           >
-            {social}
+            {social.label}
           </Link>
         ))}
       </div>

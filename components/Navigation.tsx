@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navLinks = [
   { href: "#hero", label: "Home" },
@@ -15,6 +15,31 @@ const navLinks = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navLinks.map((link) => ({
+        id: link.href.slice(1),
+        element: document.getElementById(link.href.slice(1)),
+      }));
+
+      const currentSection = sections.find((section) => {
+        if (!section.element) return false;
+        const rect = section.element.getBoundingClientRect();
+        return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -36,7 +61,7 @@ export default function Navigation() {
               key={link.href}
               href={link.href}
               className={
-                i === 0
+                activeSection === link.href.slice(1)
                   ? "text-primary border-b-2 border-primary pb-1"
                   : "text-on-surface-variant hover:text-on-surface transition-colors"
               }
@@ -50,6 +75,7 @@ export default function Navigation() {
           <span className="material-symbols-outlined text-primary">terminal</span>
           <button
             type="button"
+            onClick={() => window.open('/assets/resume-2026.pdf', '_blank')}
             className="hidden md:block bg-primary-container text-on-primary-container font-label-caps px-6 py-2 transition-all duration-200 hover:bg-primary/90 active:scale-95"
           >
             RESUME
@@ -102,6 +128,7 @@ export default function Navigation() {
         <div className="px-margin-mobile">
           <button
             type="button"
+            onClick={() => window.open('/assets/resume-2026.pdf', '_blank')}
             className="w-full bg-primary-container text-on-primary-container font-label-caps px-6 py-3 transition-all duration-200 hover:bg-primary/90 active:scale-95"
           >
             RESUME

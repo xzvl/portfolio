@@ -70,6 +70,20 @@ const config: Config = {
         "margin-desktop": "64px",
         gutter: "24px",
       },
+      keyframes: {
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(24px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-right": {
+          from: { opacity: "0", transform: "translateX(24px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        "fade-up": "fade-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both",
+        "fade-right": "fade-right 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both",
+      },
       fontFamily: {
         "headline-md": ["var(--font-inter)", "Inter", "sans-serif"],
         "label-caps": ["var(--font-jetbrains)", "JetBrains Mono", "monospace"],
