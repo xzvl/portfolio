@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import AnimatedCounter from "@/components/AnimatedCounter";
+
 export default function About() {
   return (
     <section id="about" className="py-24 lg:px-margin-desktop px-margin-mobile grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
@@ -35,21 +37,27 @@ export default function About() {
         </p>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-gutter border-t border-primary/20 pt-8">
           <div>
-            <h3 className="font-headline-lg text-headline-lg uppercase">200+</h3>
+            <h3 className="font-headline-lg text-headline-lg uppercase">
+              <AnimatedCounter value={200} step={10} intervalMs={50} suffix="+" />
+            </h3>
             <span className="font-headline-md text-headline-md">WEBSITES</span>
             <span className="font-label-caps text-[10px] text-primary block mb-2">
               HANDLED/CREATED
             </span>
           </div>
           <div>
-            <h3 className="font-headline-lg text-headline-lg uppercase">10+</h3>
+            <h3 className="font-headline-lg text-headline-lg uppercase">
+              <AnimatedCounter value={10} step={1} intervalMs={50} suffix="+" />
+            </h3>
             <span className="font-headline-md text-headline-md">PLATFORMS</span>
             <span className="font-label-caps text-[10px] text-primary block mb-2">
               LEARNED
             </span>
           </div>
           <div>
-            <h3 className="font-headline-lg text-headline-lg uppercase">12+</h3>
+            <h3 className="font-headline-lg text-headline-lg uppercase">
+              <AnimatedCounter value={12} step={1} intervalMs={50} suffix="+" />
+            </h3>
             <span className="font-headline-md text-headline-md">YEARS</span>
             <span className="font-label-caps text-[10px] text-primary block mb-2">
               EXPERIENCE
