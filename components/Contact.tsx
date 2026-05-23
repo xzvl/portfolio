@@ -42,8 +42,8 @@ export default function Contact() {
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <span className="material-symbols-outlined text-primary">mail</span>
-                  <a className="font-code-sm hover:text-primary transition-colors" href="mailto:ed.paulo.pedro04@gmail.com">
-                    ed.paulo.pedro04@gmail.com
+                  <a className="font-code-sm hover:text-primary transition-colors" href="mailto:xzviel@gmail.com">
+                    xzviel@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center gap-4">

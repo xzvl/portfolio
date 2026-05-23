@@ -17,9 +17,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XZVL - Web Development Portfolio",
+  title: "XZVL - Web Development",
   description:
-    "Engineering High-Performance Interfaces. A cyber-industrial portfolio by Ed Paulo Pedro.",
+    "Engineering High-Performance Interfaces. A cyber-industrial portfolio by XZVL.",
   icons: {
     icon: '/assets/favicon.png',
   },
