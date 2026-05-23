@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <>
       <Navigation />
-      <main className="pt-16">
+      <main className="pt-16 cyber-grid min-h-screen bg-background text-on-background">
         <Hero />
         <Ecosystem />
         <Portfolio />

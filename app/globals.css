@@ -110,3 +110,30 @@ body {
 .carousel-slide-left {
   animation: carousel-from-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
+
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(237, 13, 17, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(237, 13, 17, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.glitch-hover:hover {
+  box-shadow: 0 0 0 1px #ed0d11;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ed0d11;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Dark-mode select options */
+select option {
+  background-color: #1f1f1f;
+  color: #e2e2e2;
+}

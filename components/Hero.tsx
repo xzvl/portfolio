@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section id="hero" className="min-h-[90vh] flex flex-col justify-center lg:px-margin-desktop px-margin-mobile relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="z-10 max-w-5xl">
+      <div className="max-w-container-max mx-auto relative z-10 w-[100%]">
         <p
           className="font-label-caps text-primary mb-4 tracking-widest animate-fade-up"
           style={{ animationDelay: "0ms" }}

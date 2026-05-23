@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { Reveal } from "@/components/Reveal";
 
 type Project = {
   title: string;
@@ -23,7 +24,7 @@ const projects: Project[] = [
     link: "https://ruhdental.com/",
   },
   {
-    title: "The Church AT Rancho Bernardo",
+    title: "The Church AT Rancho BR",
     description: "www.thechurchrb.org",
     tag: "Webflow // GM 2025",
     src: "/assets/thechurchatrb.png",
@@ -82,12 +83,8 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
       <div className="p-6">
-        <h3 className="font-headline-md text-headline-md uppercase mb-2">
-          {project.title}
-        </h3>
-        <p className="font-code-sm text-on-secondary-container mb-4">
-          {project.description}
-        </p>
+        <h3 className="font-headline-md text-headline-md uppercase mb-2">{project.title}</h3>
+        <p className="font-code-sm text-on-secondary-container mb-4">{project.description}</p>
         <Link
           href={project.link}
           target="_blank"
@@ -95,9 +92,7 @@ function ProjectCard({ project }: { project: Project }) {
           className="font-label-caps text-primary text-[11px] flex items-center gap-2 hover:translate-x-2 transition-transform"
         >
           INITIALIZE_LINK{" "}
-          <span className="material-symbols-outlined text-[14px]">
-            arrow_forward
-          </span>
+          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
         </Link>
       </div>
     </div>
@@ -110,19 +105,10 @@ export default function Portfolio() {
   const total = projects.length;
   const touchStartX = useRef<number | null>(null);
 
-  const prev = () => {
-    setDirection("left");
-    setCurrent((i) => (i - 1 + total) % total);
-  };
-  const next = () => {
-    setDirection("right");
-    setCurrent((i) => (i + 1) % total);
-  };
+  const prev = () => { setDirection("left");  setCurrent((i) => (i - 1 + total) % total); };
+  const next = () => { setDirection("right"); setCurrent((i) => (i + 1) % total); };
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const delta = touchStartX.current - e.changedTouches[0].clientX;
@@ -132,53 +118,57 @@ export default function Portfolio() {
 
   return (
     <section id="portfolio" className="py-24 px-margin-mobile lg:px-margin-desktop">
-      <div className="flex items-center gap-4 mb-12">
-        <h2 className="font-headline-lg text-headline-lg uppercase">Portfolio</h2>
-        <div className="h-[2px] flex-grow bg-primary/20" />
-      </div>
+      <div className="max-w-container-max mx-auto relative z-10 w-[100%]">
 
-      {/* Mobile + Tablet: carousel */}
-      <div className="lg:hidden">
-        <div
-          className="relative select-none overflow-hidden"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
+        {/* Header */}
+        <Reveal className="flex items-center gap-4 mb-12">
+          <h2 className="font-headline-lg text-headline-lg uppercase">Portfolio</h2>
+          <div className="h-[2px] flex-grow bg-primary/20" />
+        </Reveal>
+
+        {/* Mobile + Tablet: carousel — has its own slide animation */}
+        <div className="lg:hidden">
           <div
-            key={current}
-            className={direction === "right" ? "carousel-slide-right" : "carousel-slide-left"}
+            className="relative select-none overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
           >
-            <ProjectCard project={projects[current]} />
+            <div key={current} className={direction === "right" ? "carousel-slide-right" : "carousel-slide-left"}>
+              <ProjectCard project={projects[current]} />
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-6 mt-8">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous project"
+              className="flex items-center justify-center w-10 h-10 border-2 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 active:scale-95"
+            >
+              <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+            </button>
+            <span className="font-label-caps text-label-caps text-on-surface-variant tabular-nums">
+              {current + 1} / {total}
+            </span>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next project"
+              className="flex items-center justify-center w-10 h-10 border-2 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 active:scale-95"
+            >
+              <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+            </button>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-6 mt-8">
-          <button
-            type="button"
-            onClick={prev}
-            aria-label="Previous project"
-            className="flex items-center justify-center w-10 h-10 border-2 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[18px]">chevron_left</span>
-          </button>
-          <span className="font-label-caps text-label-caps text-on-surface-variant tabular-nums">
-            {current + 1} / {total}
-          </span>
-          <button
-            type="button"
-            onClick={next}
-            aria-label="Next project"
-            className="flex items-center justify-center w-10 h-10 border-2 border-primary/40 text-primary hover:border-primary hover:bg-primary/10 transition-all duration-200 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[18px]">chevron_right</span>
-          </button>
-        </div>
-      </div>
 
-      {/* Desktop: 3-column grid */}
-      <div className="hidden lg:grid grid-cols-3 gap-8">
-        {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
-        ))}
+        {/* Desktop: 3-column grid with staggered reveal */}
+        <div className="hidden lg:grid grid-cols-3 gap-8">
+          {projects.map((project, i) => (
+            <Reveal key={project.title} delay={i * 80}>
+              <ProjectCard project={project} />
+            </Reveal>
+          ))}
+        </div>
+
       </div>
     </section>
   );

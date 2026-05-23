@@ -3,7 +3,10 @@
     "allow": [
       "Bash(vercel ls *)",
       "Bash(git commit -m ' *)",
-      "Bash(Select-String -Pattern \"framer|motion|gsap|anime|aos\")"
+      "Bash(Select-String -Pattern \"framer|motion|gsap|anime|aos\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\xzvl\\\\Documents\\\\Claude\\\\Projects\\\\xzvl\\\\nextjs-portfolio\" -Force)",
+      "Bash(Select-Object Name)",
+      "Bash(npx tsc *)"
     ]
   }
 }
