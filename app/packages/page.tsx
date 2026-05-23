@@ -59,9 +59,9 @@ const basicPackages = [
     price: "₱49,999",
     popular: false,
     features: [
-      { icon: "draft", label: "Complex Multi-Pages" },
+      { icon: "draft", label: "15 Pages" },
       { icon: "design_services", label: "High-Custom Design" },
-      { icon: "nest_clock_farsight_analog", label: "15-30 days Delivery" },
+      { icon: "nest_clock_farsight_analog", label: "15 days Delivery" },
       { icon: "dashboard", label: "Dashboard Access" },
       { icon: "mobile_hand", label: "Mobile Responsive" },
       { icon: "bolt", label: "Speed Optimization" },
@@ -442,7 +442,7 @@ export default function PackagesPage() {
                     <div className="flex-grow">
                       <div className="font-label-caps text-label-caps text-primary mb-2">SYSTEM_05_RETAIL</div>
                       <h3 className="font-headline-md text-headline-md mb-4 uppercase">E-Commerce</h3>
-                      <div className="font-headline-lg md:text-headline-lg text-primary mb-6">₱55,999</div>
+                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">₱55,999</span></div>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         {[["shopping_cart","Cart + Checkout"],["payments","Payment Gateway"],["admin_panel_settings","Role-based access"],["dns","Domain + Hosting"]].map(([icon, label]) => (
                           <li key={label} className="flex items-center gap-2 font-code-sm">
@@ -469,7 +469,7 @@ export default function PackagesPage() {
                     <div className="flex-grow">
                       <div className="font-label-caps text-label-caps text-on-surface-variant mb-2">SYSTEM_06_CORE</div>
                       <h3 className="font-headline-md text-headline-md mb-4 uppercase">Custom System</h3>
-                      <div className="font-headline-lg md:text-headline-lg mb-6">₱69,999</div>
+                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">₱69,999</span></div>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         {[["event_available","Booking System"],["api","API Integration"],["psychology","AI Automation"],["shield","Security"]].map(([icon, label]) => (
                           <li key={label} className="flex items-center gap-2 font-code-sm">
