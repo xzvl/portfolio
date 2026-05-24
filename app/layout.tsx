@@ -16,10 +16,61 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://xzvl.vercel.app";
+
 export const metadata: Metadata = {
-  title: "XZVL - Web Development",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "XZVL - Web Development",
+    template: "%s | XZVL",
+  },
   description:
     "Engineering High-Performance Interfaces. A cyber-industrial portfolio by XZVL.",
+  keywords: [
+    "XZVL",
+    "web development",
+    "frontend engineering",
+    "portfolio",
+    "high-performance interfaces",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "XZVL",
+    title: "XZVL - Web Development",
+    description:
+      "Engineering High-Performance Interfaces. A cyber-industrial portfolio by XZVL.",
+    images: [
+      {
+        url: "/assets/screenshot.png",
+        width: 1200,
+        height: 630,
+        alt: "XZVL portfolio preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "XZVL - Web Development",
+    description:
+      "Engineering High-Performance Interfaces. A cyber-industrial portfolio by XZVL.",
+    images: ["/assets/screenshot.png"],
+  },
   icons: {
     icon: '/assets/favicon.png',
   },
