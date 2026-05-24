@@ -7,11 +7,18 @@ import { Reveal } from "@/components/Reveal";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
+type CurrencyKey = "PHP" | "USD" | "AUD";
+
+const ultimatePrices: Record<"ecommerce" | "custom", Record<CurrencyKey, string>> = {
+  ecommerce: { PHP: "₱55,999", USD: "$920", AUD: "AU$1,300" },
+  custom:    { PHP: "₱69,999", USD: "$1,200", AUD: "AU$1,600" },
+};
+
 const basicPackages = [
   {
     unit: "UNIT_01",
     name: "Start up Website",
-    price: "₱14,999",
+    price: { PHP: "₱14,999", USD: "$250", AUD: "AU$350" },
     popular: false,
     features: [
       { icon: "draft", label: "1 Page / Landing Page" },
@@ -26,7 +33,7 @@ const basicPackages = [
   {
     unit: "UNIT_02 // POPULAR",
     name: "Custom Multipage",
-    price: "₱24,999",
+    price: { PHP: "₱24,999", USD: "$400", AUD: "AU$580" },
     popular: true,
     features: [
       { icon: "draft", label: "4 Pages" },
@@ -41,7 +48,7 @@ const basicPackages = [
   {
     unit: "UNIT_03",
     name: "Business Suite",
-    price: "₱34,999",
+    price: { PHP: "₱34,999", USD: "$575", AUD: "AU$800" },
     popular: false,
     features: [
       { icon: "draft", label: "8 Pages" },
@@ -56,7 +63,7 @@ const basicPackages = [
   {
     unit: "UNIT_04",
     name: "Enterprise",
-    price: "₱49,999",
+    price: { PHP: "₱49,999", USD: "$840", AUD: "AU$1,200" },
     popular: false,
     features: [
       { icon: "draft", label: "15 Pages" },
@@ -85,13 +92,63 @@ const comparisonRows = [
 ];
 
 const PROJECT_TYPES = ["Landing Page", "Website", "E-Commerce", "Custom System"];
-const BUDGET_RANGES = [
-  "Under ₱10,000",
-  "₱10,000 - ₱30,000",
-  "₱30,000 - ₱50,000",
-  "₱50,000 - ₱100,000",
-  "₱100,000 - ₱250,000",
+const BUDGET_RANGES: Record<CurrencyKey, string[]> = {
+  PHP: [
+    "Under ₱10,000",
+    "₱10,000 - ₱30,000",
+    "₱30,000 - ₱50,000",
+    "₱50,000 - ₱100,000",
+    "₱100,000 - ₱250,000",
+  ],
+  USD: [
+    "Under $200",
+    "$200 - $500",
+    "$500 - $850",
+    "$850 - $1,700",
+    "$1,700 - $4,200",
+  ],
+  AUD: [
+    "Under AU$300",
+    "AU$300 - AU$700",
+    "AU$700 - AU$1,200",
+    "AU$1,200 - AU$2,400",
+    "AU$2,400 - AU$6,000",
+  ],
+};
+
+// ─── Currency Widget ─────────────────────────────────────────────────────────
+
+const CURRENCY_OPTIONS: { key: CurrencyKey; symbol: string; label: string }[] = [
+  { key: "PHP", symbol: "₱", label: "PHP" },
+  { key: "USD", symbol: "$", label: "USD" },
+  { key: "AUD", symbol: "AU$", label: "AUD" },
 ];
+
+function CurrencyWidget({ currency, onChange }: { currency: CurrencyKey; onChange: (c: CurrencyKey) => void }) {
+  return (
+    <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col w-[148px] glass-panel border border-outline-variant/40 select-none">
+      <div className="px-3 py-2 border-b border-outline-variant/30">
+        <span className="font-label-caps text-label-caps text-[10px] text-primary tracking-widest">CURRENCY</span>
+      </div>
+      <div className="divide-y divide-outline-variant/20">
+        {CURRENCY_OPTIONS.map(({ key, symbol, label }) => (
+          <button
+            key={key}
+            onClick={() => onChange(key)}
+            className={`w-full flex items-center justify-between px-3 py-3 transition-colors ${
+              currency === key
+                ? "text-primary bg-primary/10"
+                : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container"
+            }`}
+          >
+            <span className="font-label-caps text-label-caps text-[10px]">{symbol} {label}</span>
+            {currency === key && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -125,7 +182,7 @@ const labelClass = "block font-label-caps text-label-caps text-on-surface-varian
 
 type SelectedPackage = { name: string; price: string };
 
-function InquiryModal({ selected, onClose }: { selected: SelectedPackage; onClose: () => void }) {
+function InquiryModal({ selected, onClose, currency }: { selected: SelectedPackage; onClose: () => void; currency: CurrencyKey }) {
   const [form, setForm] = useState({
     name: "", company: "", email: "", phone: "",
     projectType: "", budgetRange: "", message: "",
@@ -258,7 +315,7 @@ function InquiryModal({ selected, onClose }: { selected: SelectedPackage; onClos
                     <label className={labelClass}>Budget Range <span className="text-primary">*</span></label>
                     <select required value={form.budgetRange} onChange={(e) => set("budgetRange", e.target.value)} className={`${inputClass} appearance-none cursor-pointer`}>
                       <option value="" disabled>Select range…</option>
-                      {BUDGET_RANGES.map((r) => <option key={r} value={r}>{r}</option>)}
+                      {BUDGET_RANGES[currency].map((r) => <option key={r} value={r}>{r}</option>)}
                     </select>
                   </div>
                 </div>
@@ -309,13 +366,15 @@ function InquiryModal({ selected, onClose }: { selected: SelectedPackage; onClos
 
 export default function PackagesPage() {
   const [inquiry, setInquiry] = useState<SelectedPackage | null>(null);
+  const [currency, setCurrency] = useState<CurrencyKey>("PHP");
   const openInquiry = (name: string, price: string) => setInquiry({ name, price });
   const closeInquiry = () => setInquiry(null);
 
   return (
     <>
       <Navigation />
-      {inquiry && <InquiryModal selected={inquiry} onClose={closeInquiry} />}
+      <CurrencyWidget currency={currency} onChange={setCurrency} />
+      {inquiry && <InquiryModal selected={inquiry} onClose={closeInquiry} currency={currency} />}
 
       <main className="pt-16 cyber-grid min-h-screen bg-background text-on-background">
 
@@ -359,7 +418,7 @@ export default function PackagesPage() {
                       {pkg.unit}
                     </div>
                     <h3 className="font-headline-md text-headline-md mb-2">{pkg.name}</h3>
-                    <div className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-8">{pkg.price}</div>
+                    <div className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-8">{pkg.price[currency]}</div>
                     <ul className="space-y-4 mb-12 flex-grow">
                       {pkg.features.map((f, fi) => (
                         <li key={fi} className="flex items-start gap-3 font-code-sm text-code-sm">
@@ -369,11 +428,11 @@ export default function PackagesPage() {
                       ))}
                     </ul>
                     {pkg.popular ? (
-                      <button onClick={() => openInquiry(pkg.name, pkg.price)} className="w-full py-4 bg-primary text-on-primary font-label-caps text-label-caps transition-all uppercase hover:brightness-110 active:scale-95">
+                      <button onClick={() => openInquiry(pkg.name, pkg.price[currency])} className="w-full py-4 bg-primary text-on-primary font-label-caps text-label-caps transition-all uppercase hover:brightness-110 active:scale-95">
                         Get started
                       </button>
                     ) : (
-                      <button onClick={() => openInquiry(pkg.name, pkg.price)} className="w-full py-4 border border-on-surface hover:bg-on-surface hover:text-background font-label-caps text-label-caps transition-all uppercase active:scale-95">
+                      <button onClick={() => openInquiry(pkg.name, pkg.price[currency])} className="w-full py-4 border border-on-surface hover:bg-on-surface hover:text-background font-label-caps text-label-caps transition-all uppercase active:scale-95">
                         Get started
                       </button>
                     )}
@@ -442,7 +501,7 @@ export default function PackagesPage() {
                     <div className="flex-grow">
                       <div className="font-label-caps text-label-caps text-primary mb-2">SYSTEM_05_RETAIL</div>
                       <h3 className="font-headline-md text-headline-md mb-4 uppercase">E-Commerce</h3>
-                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">₱55,999</span></div>
+                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">{ultimatePrices.ecommerce[currency]}</span></div>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         {[["shopping_cart","Cart + Checkout"],["payments","Payment Gateway"],["admin_panel_settings","Role-based access"],["dns","Domain + Hosting"]].map(([icon, label]) => (
                           <li key={label} className="flex items-center gap-2 font-code-sm">
@@ -450,7 +509,7 @@ export default function PackagesPage() {
                           </li>
                         ))}
                       </ul>
-                      <button onClick={() => openInquiry("E-Commerce", "₱55,999")} className="px-10 py-4 bg-primary text-on-primary font-label-caps text-label-caps uppercase hover:brightness-110 active:scale-95 transition-all">
+                      <button onClick={() => openInquiry("E-Commerce", ultimatePrices.ecommerce[currency])} className="px-10 py-4 bg-primary text-on-primary font-label-caps text-label-caps uppercase hover:brightness-110 active:scale-95 transition-all">
                         Inquire System
                       </button>
                     </div>
@@ -469,7 +528,7 @@ export default function PackagesPage() {
                     <div className="flex-grow">
                       <div className="font-label-caps text-label-caps text-on-surface-variant mb-2">SYSTEM_06_CORE</div>
                       <h3 className="font-headline-md text-headline-md mb-4 uppercase">Custom System</h3>
-                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">₱69,999</span></div>
+                      <div className="font-headline-lg md:text-headline-lg mb-6">From <span className="text-primary">{ultimatePrices.custom[currency]}</span></div>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         {[["event_available","Booking System"],["api","API Integration"],["psychology","AI Automation"],["shield","Security"]].map(([icon, label]) => (
                           <li key={label} className="flex items-center gap-2 font-code-sm">
@@ -477,7 +536,7 @@ export default function PackagesPage() {
                           </li>
                         ))}
                       </ul>
-                      <button onClick={() => openInquiry("Custom System", "₱69,999")} className="px-10 py-4 border-2 border-on-surface text-on-surface font-label-caps text-label-caps uppercase hover:bg-on-surface hover:text-background active:scale-95 transition-all">
+                      <button onClick={() => openInquiry("Custom System", ultimatePrices.custom[currency])} className="px-10 py-4 border-2 border-on-surface text-on-surface font-label-caps text-label-caps uppercase hover:bg-on-surface hover:text-background active:scale-95 transition-all">
                         Inquire System
                       </button>
                     </div>
