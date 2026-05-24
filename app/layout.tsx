@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -92,6 +94,8 @@ export default function RootLayout({
       <body className="font-body-md text-body-md overflow-x-hidden">
         <div className="fixed inset-0 scanline z-[100]" />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
