@@ -333,7 +333,7 @@ function InquiryModal({ selected, onClose, currency }: { selected: SelectedPacka
                     </div>
                   </div>
                   <span className="font-code-sm text-code-sm text-on-surface-variant leading-relaxed">
-                    I agree to the <span className="text-primary underline underline-offset-2 cursor-pointer">Privacy Policy</span> and <span className="text-primary underline underline-offset-2 cursor-pointer">Terms &amp; Conditions</span>. I consent to XZVL Web Dev collecting and processing my information to respond to this inquiry.
+                    I agree to the <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">Privacy Policy</a> and <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">Terms &amp; Conditions</a>. I consent to XZVL Web Dev collecting and processing my information to respond to this inquiry.
                   </span>
                 </label>
 

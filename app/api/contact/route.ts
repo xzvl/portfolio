@@ -22,7 +22,19 @@ export async function POST(req: Request) {
       to: "xzviel@gmail.com",
       replyTo: email,
       subject: `New message from ${name}`,
-      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, "<br />")}</p>`,
+      html: `
+        <div style="font-family: monospace; background: #131313; color: #e2e2e2; padding: 32px; max-width: 600px;">
+          <h2 style="color: #ed0d11; margin: 0 0 24px;">NEW MESSAGE RECEIVED</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; color: #b4b5b5; width: 160px;">Name</td><td style="padding: 8px 0;">${name}</td></tr>
+            <tr><td style="padding: 8px 0; color: #b4b5b5;">Email</td><td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #ed0d11;">${email}</a></td></tr>
+          </table>
+          <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #353535;">
+            <p style="color: #b4b5b5; margin: 0 0 8px;">MESSAGE</p>
+            <p style="margin: 0; line-height: 1.6;">${message.replace(/\n/g, "<br />")}</p>
+          </div>
+        </div>
+      `,
     });
 
     if (response.error) {
