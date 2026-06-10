@@ -45,10 +45,10 @@ export default function About() {
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-gutter border-t border-primary/20 pt-8">
                 <div>
                   <h3 className="font-headline-lg text-headline-lg uppercase">
-                    <AnimatedCounter value={200} step={10} intervalMs={50} suffix="+" />
+                    <AnimatedCounter value={600} step={10} intervalMs={50} suffix="+" />
                   </h3>
                   <span className="font-headline-md text-headline-md">WEBSITES</span>
-                  <span className="font-label-caps text-[10px] text-primary block mb-2">HANDLED/CREATED</span>
+                  <span className="font-label-caps text-[10px] text-primary block mb-2">CREATED/CONTRIBUTED</span>
                 </div>
                 <div>
                   <h3 className="font-headline-lg text-headline-lg uppercase">
